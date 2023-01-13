@@ -12,26 +12,22 @@ This document consolidates tips for some of the best practices I have learned fo
 
     ### Example:
     ```
-    USE        nginx:1.23.1 
-    INSTEAD of nginx:latest
+    DO      nginx:1.23.1 
+    DON'T   nginx:latest
     ```
 
 3. Ensure that your Images run as NON-ROOT by defining “USER” in your Dockerfile then set the permissions for the files and directories to the USER. The Docker deamon runs as root and by default Docker images run as Root. This means if a processes in the container went rogue and had access to the host, it will run with root access. This is certainly not secure. 
     
     ### Example, add USER as follows in your Dockerfile:
     ```
+    ...
     USER 1001
     RUN chown -R 1001:0 /some/directory
         chmod -R g=u /some/directory
+    ...
     ```
 
 4. Always choose the smallest base images that do not contain the complete or full-blown OS with system utilities installed. You can install the tools and utilities needed for your application in the Dockerfile build. This will reduce possible vulnerabilities and attack surface in your image.
-
-    ### Example :
-    ```
-    USE        nginx:1.23.1-alpine 
-    INSTEAD of nginx:1.23-suse (NOT A REAL IMAGE)
-    ```
 
 5. Build images using [Multi-Stage Dockerfiles](https://docs.docker.com/develop/develop-images/multistage-build/) to keep image size small. For example, for a Java application use 1st stage to do the maven build and compile and then a 2nd stage to copy the binary artifact(s) and dependencies only and discarding all the unneeded artifacts OR for an Angular application, run the npm install and build in one stage and copy built artifacts in the next stage.
 
