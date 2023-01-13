@@ -70,7 +70,7 @@ This document consolidates tips for some of the best practices I have learned fo
 8. Order your Docker commands especially the ```COPY``` command in such a way that the files that change the most frequent are at the bottom. This will speed up the build process. The reason being, each Docker build command creates a layer, this layer is cached and reused to speed up the next build. The caveat is that, in the subsequent build, If a command encounters a change, ALL the layers after that command will be rebuilt and recached even if they did not contain any changes. Having the most volatile COPY statements later in the Docker maximizes on build caching.
 
 9. Concatenate RUN commands to create fewer layers thus smaller images and readable files. Each RUN statement in the ```Dockerfile``` creates a layer that cached, concatening reduces these layers.
-    ### Example: INSTEAD OF
+    ### Example: DON'T Do this
     ```
     ...
     RUN yum --disablerepo=* --enablerepo=”rhel-7-server-rpms”
@@ -79,14 +79,14 @@ This document consolidates tips for some of the best practices I have learned fo
     ...
     ```
     
-    ### DO THIS
+    ### Do this instead 
     ```
     ...
     RUN yum --disablerepo=* --enablerepo=”rhel-7-server-rpms” && yum update && yum instal -yl httpd
     ...
     ```
 
-    ### EVEN BETTER FOR READABILITY
+    ### Even better, for readability
     ```
     ...
     RUN yum --disablerepo=*  --enablerepo=”rhel-7-server-rpms” && \
