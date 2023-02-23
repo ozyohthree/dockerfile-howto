@@ -67,10 +67,10 @@ This document consolidates tips for some of the best practices I have learned fo
 
     > Podman integrates with multiple open-source scanning tools. For example, you can use;
 
-      * [Synk](https://snyk.io/product/open-source-security-management/) 
+      * [Synk](https://www.redhat.com/en/blog/using-snyk-and-podman-scan-container-images-development-deployment) 
       * [Trivy](https://aquasecurity.github.io/trivy/v0.37/docs/target/container_image/#podman)
 
-    ### Example: Docker On your local machine run
+    ### Example: Docker On your local machine
 
     > Docker also integragrates with its own plugin. Install the [plugin](https://docs.docker.com/engine/scan/) the run the below command:
     ``` 
